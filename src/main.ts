@@ -77,10 +77,10 @@ class DayComponent implements Component<DayState, DayEventKinds, DayEvents> {
     }
 }
 
-class CalendarComponent implements Component<State, Foo, Event<Foo>> {
+class CalendarComponent implements Component<State, CalendarEventKind, Event<CalendarEventKind>> {
   readonly state : State;
-  subscribers : { [k in Foo] : ((e : Event<Foo>) => void)[] } = {
-    Foo : []
+  subscribers : { [k in CalendarEventKind] : ((e : Event<CalendarEventKind>) => void)[] } = {
+    NoOp : []
   };
 
   readonly daysElement : HTMLDivElement = document.createElement("div") as HTMLDivElement;
@@ -198,12 +198,12 @@ class CalendarComponent implements Component<State, Foo, Event<Foo>> {
     }
   };
 
-  addEventSubscriber(k : Foo, f : (e : Event<Foo>) => void) {
+  addEventSubscriber(k : CalendarEventKind, f : (e : Event<CalendarEventKind>) => void) {
       this.subscribers[k].push(f);
   }
 }
 
-type Foo = "Foo";
+type CalendarEventKind = "NoOp";
 type State = { date: Date, selected : { [d : string] : boolean }} & object;
 const target : State = {
   date: new Date(Date.now()),
